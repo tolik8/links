@@ -17,6 +17,7 @@ class IndexController extends MainController
     public function __construct()
     {
         parent::__construct();
+        $this->middleware ('auth');
     }
 
     /**
@@ -27,10 +28,6 @@ class IndexController extends MainController
     public function index()
     {
         $data = $this->data;
-
-        if (Auth::user() === null) {
-            return view($this->theme() . '.index', $data);
-        }
 
         $data['groups'] = Group::where('parent_id', 0)->get();
         foreach ($data['groups'] as $group) {
@@ -57,7 +54,8 @@ class IndexController extends MainController
 
     public function settingsSave(Request $request)
     {
-        dump($request);
+        session(['access_id' => $request->access_id]);
+        return redirect()->route('index')->with('status', 'Access changed');
     }
 
 }

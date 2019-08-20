@@ -12,7 +12,7 @@
         <p><label for="TypeOfAccess">@lang('settings.select_type_of_access')</label>
         <select class="form-control" name="access_id" id="TypeOfAccess">
             @foreach ($types as $type)
-                @if (old('access_id') == $type->id)
+                @if (session('access_id') == $type->id)
                     <option value="{{ $type->id }}" selected>{{ Lang::get($type->name) }}</option>
                 @else
                     <option value="{{ $type->id }}">{{ Lang::get($type->name) }}</option>
