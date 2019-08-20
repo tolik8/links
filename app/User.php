@@ -41,7 +41,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'type_access_id'
     ];
 
     /**
@@ -61,4 +61,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getTypeAccess()
+    {
+        $type_access_id = User::get('type_access_id');
+
+        if ($type_access_id === 0) {
+            return Config('settings.default_type_access');
+        }
+
+        return $type_access_id;
+    }
+
 }

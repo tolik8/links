@@ -1,11 +1,11 @@
 @extends($theme.'.layouts.app')
 
-@section('title', 'Links - ' . __('main.friends'))
+@section('title', 'Links - ' . __('main.subscriptions'))
 
 @section('content')
 <div class="container">
 
-    <h3>@lang('main.friends')</h3>
+    <h3>@lang('main.subscriptions')</h3>
 
 </div>
 @endsection

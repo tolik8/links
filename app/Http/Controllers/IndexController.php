@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Group;
 use App\TypeAccess;
+use App\User;
 
 class IndexController extends MainController
 {
@@ -51,6 +52,8 @@ class IndexController extends MainController
     public function settings()
     {
         $this->data['types'] = TypeAccess::all();
+        //$user = User::
+        //dd($user);
 
         return view($this->theme() . '.settings', $this->data);
     }

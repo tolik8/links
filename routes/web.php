@@ -18,6 +18,7 @@ Route::get('/settings', 'IndexController@settings')->name('settings');
 Route::post('/settings', 'IndexController@settingsSave')->name('settings_save');
 
 Route::get('/friends', 'FriendsController@index')->name('friends');
+Route::get('/subscriptions', 'SubscriptionsController@index')->name('subscriptions');
 
 Route::get('/setlocale/{lang}', 'LocaleController@setLocale')->name('setlocale');
 

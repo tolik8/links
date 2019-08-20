@@ -1,6 +1,6 @@
 @extends($theme.'.layouts.app')
 
-@section('title', 'Links - ' . Lang::get('main.settings'))
+@section('title', 'Links - ' . __('main.settings'))
 
 @section('content')
 <div class="container">
@@ -13,9 +13,9 @@
         <select class="form-control" name="access_id" id="TypeOfAccess">
             @foreach ($types as $type)
                 @if (old('access_id') == $type->id)
-                    <option value="{{ $type->id }}" selected>{{ Lang::get($type->name) }}</option>
+                    <option value="{{ $type->id }}" selected>{{ __($type->name) }}</option>
                 @else
-                    <option value="{{ $type->id }}">{{ Lang::get($type->name) }}</option>
+                    <option value="{{ $type->id }}">{{ __($type->name) }}</option>
                 @endif
             @endforeach
         </select></p>
