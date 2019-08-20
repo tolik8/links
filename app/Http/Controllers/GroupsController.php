@@ -10,6 +10,12 @@ use App\TypeAccess;
 
 class GroupsController extends MainController
 {
+    /*public function __construct()
+    {
+        parent::__construct();
+        $this->middleware('auth');
+    }*/
+
     /**
      * Display a listing of the resource.
      *

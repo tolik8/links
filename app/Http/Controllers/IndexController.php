@@ -27,11 +27,16 @@ class IndexController extends MainController
      */
     public function index()
     {
-        $data = $this->data;
-
-        if (Auth::user() === null) {
-            return view($this->theme() . '.index', $data);
+        if (!Auth::user()) {
+            return $this->index_not_auth();
         }
+
+        return $this->index_auth();
+    }
+
+    public function index_auth()
+    {
+        $data = $this->data;
 
         $data['groups'] = Group::where('parent_id', 0)->get();
         foreach ($data['groups'] as $group) {
@@ -46,21 +51,12 @@ class IndexController extends MainController
 
         }
 
-        return view($this->theme() . '.home', $data);
+        return view($this->theme() . '.index_auth', $data);
     }
 
-    public function settings()
+    public function index_not_auth()
     {
-        $this->data['types'] = TypeAccess::all();
-        //$user = User::
-        //dd($user);
-
-        return view($this->theme() . '.settings', $this->data);
-    }
-
-    public function settingsSave(Request $request)
-    {
-        dump($request);
+        return view($this->theme() . '.index_not_auth', $this->data);
     }
 
 }

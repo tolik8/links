@@ -14,7 +14,8 @@ class AddTypeAccessToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->bigInteger('type_access_id')->nullable(false)->unsigned()->comment('Type access ID');
+            $table->bigInteger('type_access_id')
+                ->nullable(false)->unsigned()->default(0)->comment('Type access ID');
         });
     }
 
