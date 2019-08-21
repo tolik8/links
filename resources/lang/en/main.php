@@ -9,5 +9,7 @@ return [
     'name' => 'Name',
     'create' => 'Create',
     'save' => 'Save',
+    'settings_saved' => 'Settings saved',
+    'group_created' => 'Group created',
     
 ];

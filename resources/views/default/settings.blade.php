@@ -7,12 +7,15 @@
 
     <h3>@lang('main.settings')</h3>
 
+    @include($theme.'.layouts.errors')
+    @include($theme.'.layouts.success')
+
     <form action="{{ route('settings_save') }}" method="POST">
         @csrf
         <p><label for="TypeOfAccess">@lang('settings.select_type_of_access')</label>
-        <select class="form-control" name="access_id" id="TypeOfAccess">
+        <select class="form-control" name="type_access_id" id="TypeOfAccess">
             @foreach ($types as $type)
-                @if (old('access_id') == $type->id)
+                @if ($type_access === $type->id)
                     <option value="{{ $type->id }}" selected>{{ __($type->name) }}</option>
                 @else
                     <option value="{{ $type->id }}">{{ __($type->name) }}</option>

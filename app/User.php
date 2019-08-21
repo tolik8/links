@@ -67,6 +67,10 @@ class User extends Authenticatable
     {
         $type_access_id = Auth::user()->type_access_id;
 
+        if (!$type_access_id) {
+            return Config('settings.default_type_access');
+        }
+
         if ($type_access_id === 0) {
             return Config('settings.default_type_access');
         }

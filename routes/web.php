@@ -14,6 +14,7 @@
 Auth::routes();
 
 Route::get('/', 'IndexController@index')->name('index');
+Route::get('/{group}', 'IndexController@index')->name('group');
 
 Route::get('/settings', 'SettingsController@index')->name('settings')->middleware('auth');
 Route::post('/settings', 'SettingsController@save')->name('settings_save')->middleware('auth');
@@ -23,3 +24,4 @@ Route::get('/subscriptions', 'SubscriptionsController@index')->name('subscriptio
 Route::get('/setlocale/{lang}', 'LocaleController@setLocale')->name('setlocale');
 
 Route::resource('/groups', 'GroupsController')->middleware('auth');
+Route::get('/groups/create/{group}', 'GroupsController@create')->name('group_create');

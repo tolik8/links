@@ -5,47 +5,37 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Group;
-use App\TypeAccess;
-use App\User;
+use Illuminate\Support\Facades\DB;
 
 class IndexController extends MainController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+    public function index($group = 0)
     {
         if (!Auth::user()) {
-            return $this->index_not_auth();
+            return $this->indexNotAuth();
         }
 
-        return $this->index_auth();
+        return $this->indexAuth($group);
     }
 
-    public function index_auth()
+    public function indexAuth($group = 0)
     {
         $data = $this->data;
 
-        $data['groups'] = Group::where('parent_id', 0)->get();
-        foreach ($data['groups'] as $group) {
-            switch ($group->access_id) {
+        $data['group'] = $group;
+
+        $group_model = Group::find($group);
+        $data['group_name'] = $group_model->name;
+
+        $data['groups'] = Group::where('parent_id', $group)->get();
+
+        foreach ($data['groups'] as $item) {
+            switch ($item->access_id) {
                 case 2:
-                    $group->setAttribute('icon', '<i class="fas fa-user-friends"></i>');
+                    $item->setAttribute('icon', '<i class="fas fa-user-friends"></i>');
                     break;
                 case 3:
-                    $group->setAttribute('icon', '<i class="fas fa-lock"></i>');
+                    $item->setAttribute('icon', '<i class="fas fa-lock"></i>');
                     break;
             }
 
@@ -54,7 +44,7 @@ class IndexController extends MainController
         return view($this->theme() . '.index_auth', $data);
     }
 
-    public function index_not_auth()
+    public function indexNotAuth()
     {
         return view($this->theme() . '.index_not_auth', $this->data);
     }

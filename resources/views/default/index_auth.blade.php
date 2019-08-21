@@ -7,12 +7,14 @@
 
     @include($theme.'.layouts.success')
 
-    <a href="{{ route('groups.create') }}" class="btn btn-primary">@lang('groups.create_new_group')</a>
+    <h3>{{ $group_name }}</h3>
+
+    <a href="{{ route('group_create', ['group' => $group]) }}" class="btn btn-primary">@lang('groups.create_new_group')</a>
 
     <hr>
 
     @foreach ($groups as $group)
-        <button class="btn btn-success group">{!! $group->icon !!} {{ $group->name }}</button>
+        <a href="{{ route('group', ['group' => $group->id]) }}" class="btn btn-success group">{!! $group->icon !!} {{ $group->name }}</a>
     @endforeach
 
 </div>

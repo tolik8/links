@@ -10,12 +10,6 @@ use App\TypeAccess;
 
 class GroupsController extends MainController
 {
-    /*public function __construct()
-    {
-        parent::__construct();
-        $this->middleware('auth');
-    }*/
-
     /**
      * Display a listing of the resource.
      *
@@ -31,9 +25,10 @@ class GroupsController extends MainController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($group = 0)
     {
         $this->data['types'] = TypeAccess::all();
+
         return view($this->theme() . '.groups.create', $this->data);
     }
 
@@ -55,7 +50,7 @@ class GroupsController extends MainController
             return redirect()->route('groups.create');
         }
 
-        return redirect()->route('index')->with('status', 'Group created');
+        return redirect()->route('index')->with('status', __('group_created'));
     }
 
     /**

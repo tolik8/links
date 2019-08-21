@@ -2,40 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 use App\TypeAccess;
+use App\Http\Requests\TypeAccessRequest;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class SettingsController extends MainController
 {
-    /*public function __construct()
-    {
-        parent::__construct();
-        $this->middleware('auth');
-    }*/
-
     public function index()
     {
         $this->data['types'] = TypeAccess::all();
-        //$type = User::get('type_access_id');
-        //dd($type);
-        //dd($user);
-
-        //$type_access_id = Auth::user()->type_access_id;
-
-
-        //dd($user);
-
-        $type = User::getTypeAccess();
-        dd($type);
-
+        $this->data['type_access'] = User::getTypeAccess();
 
         return view($this->theme() . '.settings', $this->data);
     }
 
-    public function save(Request $request)
+    public function save(TypeAccessRequest $request)
     {
-        dump($request);
+        if ($request->validated()) {
+            $user = User::find(Auth::user()->id);
+            $user->type_access_id = $request->get('type_access_id');
+
+            if ($user->save()) {
+                return redirect('settings')->with('status', __('main.settings_saved'));
+            }
+        }
+
+        return redirect('settings');
     }
 
 }
