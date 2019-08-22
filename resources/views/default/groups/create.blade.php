@@ -18,7 +18,9 @@
             <label for="TypeOfAccess">@lang('groups.type_access')</label>
             <select class="form-control" name="access_id" id="TypeOfAccess">
                 @foreach ($types as $type)
-                    @if (old('access_id') == $type->id)
+                    @if (old('access_id') === null && $type_access === $type->id)
+                        <option value="{{ $type_access }}" selected>{{ __($type->name) }}</option>
+                    @elseif (old('access_id') === $type->id)
                         <option value="{{ $type->id }}" selected>{{ __($type->name) }}</option>
                     @else
                         <option value="{{ $type->id }}">{{ __($type->name) }}</option>

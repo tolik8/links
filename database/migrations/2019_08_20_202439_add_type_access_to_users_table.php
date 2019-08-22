@@ -15,7 +15,8 @@ class AddTypeAccessToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->bigInteger('type_access_id')
-                ->nullable(false)->unsigned()->default(0)->comment('Type access ID');
+                ->nullable(false)->unsigned()->default(1)->comment('Type access ID');
+            $table->foreign('type_access_id')->references('id')->on('type_access');
         });
     }
 
@@ -27,6 +28,7 @@ class AddTypeAccessToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('users_type_access_id_foreign');
             $table->dropColumn('type_access_id');
         });
     }

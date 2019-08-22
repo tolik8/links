@@ -31,6 +31,10 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Group[] $groups
+ * @property int $type_access_id Type access ID
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereTypeAccessId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\TypeAccess[] $typeAccess
  */
 class User extends Authenticatable
 {
@@ -62,8 +66,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function groups()
+    {
+        return $this->hasMany('App\Group');
+    }
 
-    public static function getTypeAccess()
+    public function typeAccess()
+    {
+        return $this->hasMany('App\TypeAccess');
+    }
+
+    /*public static function getTypeAccess()
     {
         $type_access_id = Auth::user()->type_access_id;
 
@@ -76,6 +90,6 @@ class User extends Authenticatable
         }
 
         return $type_access_id;
-    }
+    }*/
 
 }

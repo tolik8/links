@@ -25,8 +25,30 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Group whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Group whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \App\User $user
  */
 class Group extends Model
 {
     protected $fillable = ['name', 'parent_id', 'user_id', 'access_id'];
+    
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    public static function getBreadcrumb($id)
+    {
+        $parent = self::where('id', $id)->first()->parent_id;
+        dd(123);
+        dd($parent);
+
+        /*while ($id !== 0) {
+
+        }*/
+    }
+
+    /*public function children() {
+        return $this->hasMany('Group','parent_id');
+    }*/
+    
 }

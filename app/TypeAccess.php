@@ -19,8 +19,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TypeAccess whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\TypeAccess whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\User $user
  */
 class TypeAccess extends Model
 {
     protected $table = 'type_access';
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
 }

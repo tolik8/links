@@ -29,6 +29,13 @@ class GroupsController extends MainController
     {
         $this->data['types'] = TypeAccess::all();
 
+        if ((int)$group === 0) {
+            $this->data['type_access'] = Auth::user()->type_access_id;
+        } else {
+            //$this->data['type_access'] = Auth::user()->groups()->where('id', $group)->get()->access_id;
+            $this->data['type_access'] = Auth::user()->groups()->where('id', $group)->first()->access_id;
+        }
+
         return view($this->theme() . '.groups.create', $this->data);
     }
 
@@ -50,7 +57,7 @@ class GroupsController extends MainController
             return redirect()->route('groups.create');
         }
 
-        return redirect()->route('index')->with('status', __('group_created'));
+        return redirect()->route('index')->with('status', __('main.group_created'));
     }
 
     /**

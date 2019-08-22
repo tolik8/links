@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Group;
-use Illuminate\Support\Facades\DB;
 
 class IndexController extends MainController
 {
@@ -23,11 +22,20 @@ class IndexController extends MainController
         $data = $this->data;
 
         $data['group'] = $group;
+        $data['group_name'] = '';
 
-        $group_model = Group::find($group);
-        $data['group_name'] = $group_model->name;
+        if ($group !== 0) {
+            $group_model = Auth::user()->groups()->where('id', $group)->first();
 
-        $data['groups'] = Group::where('parent_id', $group)->get();
+            if (!$group_model) {return redirect()->route('index');}
+
+            $data['group_name'] = $group_model->name;
+
+            $bc = Group::getBreadcrumb($group);
+            dd($bc);
+        }
+
+        $data['groups'] = Auth::user()->groups()->where('parent_id', $group)->get();
 
         foreach ($data['groups'] as $item) {
             switch ($item->access_id) {
@@ -38,7 +46,6 @@ class IndexController extends MainController
                     $item->setAttribute('icon', '<i class="fas fa-lock"></i>');
                     break;
             }
-
         }
 
         return view($this->theme() . '.index_auth', $data);

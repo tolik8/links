@@ -12,6 +12,6 @@ return [
     |
     */
 
-    'default_type_access' => 2,
+    //'default_type_access' => 2,
 
 ];
