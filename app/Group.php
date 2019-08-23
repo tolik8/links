@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Group
@@ -38,17 +39,32 @@ class Group extends Model
 
     public static function getBreadcrumb($id)
     {
-        $parent = self::where('id', $id)->first()->parent_id;
-        dd(123);
-        dd($parent);
+        $id = (int)$id;
+        $user_id = Auth::user()->id;
+        $breadcrumb = collect();
+        $i = 0;
 
-        /*while ($id !== 0) {
+        while ($id !== 0 && $i < 10) {
+            $element = self::where('id', $id)->where('user_id', $user_id)->get();
+            $id = $element->first()->parent_id;
 
-        }*/
+            if ($element->isNotEmpty()) {
+                $breadcrumb = $breadcrumb->merge($element);
+            }
+            $i++;
+        }
+
+        return $breadcrumb->reverse();
     }
 
-    /*public function children() {
-        return $this->hasMany('Group','parent_id');
-    }*/
+
+    public function children() {
+        return $this->hasMany('Group', 'parent_id');
+    }
+
+    public function parent() {
+        return $this->belongsTo('Group', 'parent_id');
+    }
+
     
 }

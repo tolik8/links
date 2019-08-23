@@ -25,15 +25,15 @@ class GroupsController extends MainController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($group = 0)
+    public function create($group_id = 0)
     {
+        $group_id = (int)$group_id;
         $this->data['types'] = TypeAccess::all();
 
-        if ((int)$group === 0) {
+        if ($group_id === 0) {
             $this->data['type_access'] = Auth::user()->type_access_id;
         } else {
-            //$this->data['type_access'] = Auth::user()->groups()->where('id', $group)->get()->access_id;
-            $this->data['type_access'] = Auth::user()->groups()->where('id', $group)->first()->access_id;
+            $this->data['type_access'] = Auth::user()->groups()->where('id', $group_id)->first()->access_id;
         }
 
         return view($this->theme() . '.groups.create', $this->data);

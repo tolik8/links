@@ -14,14 +14,15 @@
 Auth::routes();
 
 Route::get('/', 'IndexController@index')->name('index');
-Route::get('/group/{group}', 'IndexController@index')->name('group');
+Route::get('/group/{group_id}', 'IndexController@index')->name('group');
+Route::get('/group/{group_id}', 'IndexController@index')->name('group');
 
 Route::get('/settings', 'SettingsController@index')->name('settings')->middleware('auth');
 Route::post('/settings', 'SettingsController@save')->name('settings_save')->middleware('auth');
-Route::get('/friends', 'FriendsController@index')->name('friends');
+Route::get('/friends', 'FriendsController@index')->name('friends')->middleware('auth');
 Route::get('/subscriptions', 'SubscriptionsController@index')->name('subscriptions')->middleware('auth');
 
 Route::get('/setlocale/{lang}', 'LocaleController@setLocale')->name('setlocale');
 
 Route::resource('/groups', 'GroupsController')->middleware('auth');
-Route::get('/groups/create/{group}', 'GroupsController@create')->name('group_create');
+Route::get('/groups/create/{group_id}', 'GroupsController@create')->name('groups.new')->middleware('auth');

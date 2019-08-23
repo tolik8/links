@@ -8,34 +8,27 @@ use Illuminate\Support\Facades\Auth;
 
 class IndexController extends MainController
 {
-    public function index($group = 0)
+    public function index($group_id = 0)
     {
+        $group_id = (int)$group_id;
+
         if (!Auth::user()) {
             return $this->indexNotAuth();
         }
 
-        return $this->indexAuth($group);
+        return $this->indexAuth($group_id);
     }
 
-    public function indexAuth($group = 0)
+    public function indexAuth($group_id = 0)
     {
         $data = $this->data;
+        $data['group_id'] = $group_id;
 
-        $data['group'] = $group;
-        $data['group_name'] = '';
-
-        if ($group !== 0) {
-            $group_model = Auth::user()->groups()->where('id', $group)->first();
-
-            if (!$group_model) {return redirect()->route('index');}
-
-            $data['group_name'] = $group_model->name;
-
-            $bc = Group::getBreadcrumb($group);
-            dd($bc);
+        if ($group_id !== 0) {
+            $data['breadcrumb'] = Group::getBreadcrumb($group_id);
         }
 
-        $data['groups'] = Auth::user()->groups()->where('parent_id', $group)->get();
+        $data['groups'] = Auth::user()->groups()->where('parent_id', $group_id)->get();
 
         foreach ($data['groups'] as $item) {
             switch ($item->access_id) {

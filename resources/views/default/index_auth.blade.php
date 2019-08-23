@@ -5,11 +5,11 @@
 @section('content')
 <div class="container">
 
+    @include($theme.'.layouts.breadcrumb')
+
     @include($theme.'.layouts.success')
 
-    <h3>{{ $group_name }}</h3>
-
-    <a href="{{ route('group_create', ['group' => $group]) }}" class="btn btn-primary">@lang('groups.create_new_group')</a>
+    <a href="{{ route('groups.new', ['group_id' => $group_id]) }}" class="btn btn-primary">@lang('groups.create_new_group')</a>
 
     <hr>
 
