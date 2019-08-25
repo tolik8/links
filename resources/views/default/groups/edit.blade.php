@@ -1,17 +1,17 @@
 @extends($theme.'.layouts.app')
 
-@section('title', 'Links - ' . __('groups.create_new_group'))
+@section('title', 'Links - ' . __('groups.edit_group'))
 
 @section('content')
 <div class="container">
 
     @include($theme.'.layouts.breadcrumb')
-    <h3>@lang('groups.create_new_group')</h3>
+    <h3>@lang('groups.edit_group')</h3>
     @include($theme.'.layouts.errors')
 
     <form action="{{ route('groups.store') }}" method="POST">
         @csrf
-        <input type="hidden" name="group" value="{{ $group }}">
+        <input type="hidden" name="group_id" value="{{ $group }}">
         <div class="form-group">
             <input type="text" name="name" class="form-control" placeholder="@lang('main.name')" value="{{ old('name') }}" autocomplete="off">
         </div>
@@ -29,7 +29,7 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">@lang('main.create')</button>
+        <button type="submit" class="btn btn-primary">@lang('main.edit')</button>
     </form>
 
 </div>

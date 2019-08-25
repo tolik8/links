@@ -25,15 +25,17 @@ class GroupsController extends MainController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($group_id = 0)
+    public function create($group = 0)
     {
-        $group_id = (int)$group_id;
+        $group = (int)$group;
+        $this->data['group'] = $group;
         $this->data['types'] = TypeAccess::all();
 
-        if ($group_id === 0) {
+        if ($group === 0) {
             $this->data['type_access'] = Auth::user()->type_access_id;
         } else {
-            $this->data['type_access'] = Auth::user()->groups()->where('id', $group_id)->first()->access_id;
+            $this->data['type_access'] = Auth::user()->groups()->where('id', $group)->first()->access_id;
+            $this->data['breadcrumb'] = Group::getBreadcrumb($group);
         }
 
         return view($this->theme() . '.groups.create', $this->data);
@@ -48,7 +50,8 @@ class GroupsController extends MainController
     public function store(GroupRequest $request)
     {
         $data = $request->validated();
-        $data['parent_id'] = 0;
+
+        $data['parent_id'] = $request->group;
         $data['user_id'] = Auth::user()->id;
 
         $result = Group::create($data);
@@ -57,7 +60,7 @@ class GroupsController extends MainController
             return redirect()->route('groups.create');
         }
 
-        return redirect()->route('index')->with('status', __('main.group_created'));
+        return redirect()->route('group', ['group' => $request->group])->with('status', __('main.group_created'));
     }
 
     /**
@@ -77,9 +80,19 @@ class GroupsController extends MainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($group)
     {
-        //
+        $this->data['group'] = $group;
+        $this->data['types'] = TypeAccess::all();
+
+        if ($group === 0) {
+            $this->data['type_access'] = Auth::user()->type_access_id;
+        } else {
+            $this->data['type_access'] = Auth::user()->groups()->where('id', $group)->first()->access_id;
+            $this->data['breadcrumb'] = Group::getBreadcrumb($group);
+        }
+
+        return view($this->theme() . '.groups.edit', $this->data);
     }
 
     /**
@@ -100,8 +113,14 @@ class GroupsController extends MainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Group $group)
     {
-        //
+        try {
+            $group->delete();
+        } catch (\Exception $e) {
+
+        }
+
+        return redirect()->route('group', ['group_id' => $group->parent_id]);
     }
 }

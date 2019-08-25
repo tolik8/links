@@ -1,18 +1,8 @@
 
-.language {
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: 50px;
-}
-
-.language span {
-    margin-right: 10px;
-}
-
-.language span.active {
+#language_active {
     border-bottom: 2px solid black;
 }
 
-.group {
-    margin-right: 10px;
+.cursor-pointer{
+    cursor: pointer;
 }

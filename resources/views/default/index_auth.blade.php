@@ -6,16 +6,13 @@
 <div class="container">
 
     @include($theme.'.layouts.breadcrumb')
-
     @include($theme.'.layouts.success')
 
-    <a href="{{ route('groups.new', ['group_id' => $group_id]) }}" class="btn btn-primary">@lang('groups.create_new_group')</a>
-
-    <hr>
-
-    @foreach ($groups as $group)
-        <a href="{{ route('group', ['group' => $group->id]) }}" class="btn btn-success group">{!! $group->icon !!} {{ $group->name }}</a>
+    @foreach ($groups as $item)
+        <a href="{{ route('group', ['group' => $item->id]) }}" class="btn btn-success mr-1">{!! $item->icon !!} {{ $item->name }}</a>
     @endforeach
+
+    <a href="{{ route('groups.new', ['group' => $group]) }}" class="btn btn-primary"><i class="fas fa-plus-square"></i></a>
 
 </div>
 @endsection

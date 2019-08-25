@@ -42,7 +42,7 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
 
-                        <div class="language">
+                        <div class="my-auto mr-5">
                             @include($theme.'.layouts.language')
                         </div>
 

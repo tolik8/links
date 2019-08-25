@@ -40,6 +40,11 @@ class Group extends Model
     public static function getBreadcrumb($id)
     {
         $id = (int)$id;
+
+        if ($id === 0) {
+            return collect();
+        }
+
         $user_id = Auth::user()->id;
         $breadcrumb = collect();
         $i = 0;
