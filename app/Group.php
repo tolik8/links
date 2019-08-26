@@ -51,10 +51,12 @@ class Group extends Model
 
         while ($id !== 0 && $i < 10) {
             $element = self::where('id', $id)->where('user_id', $user_id)->get();
-            $id = $element->first()->parent_id;
 
             if ($element->isNotEmpty()) {
+                $id = $element->first()->parent_id;
                 $breadcrumb = $breadcrumb->merge($element);
+            } else {
+                abort(403);
             }
             $i++;
         }

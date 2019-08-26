@@ -11,16 +11,6 @@ use App\TypeAccess;
 class GroupsController extends MainController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return redirect()->route('index');
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -28,17 +18,20 @@ class GroupsController extends MainController
     public function create($group = 0)
     {
         $group = (int)$group;
-        $this->data['group'] = $group;
-        $this->data['types'] = TypeAccess::all();
+        $data = [
+            'group' => $group,
+            'types' => TypeAccess::all(),
+        ];
 
         if ($group === 0) {
-            $this->data['type_access'] = Auth::user()->type_access_id;
+            $data['type_access'] = Auth::user()->type_access_id;
         } else {
-            $this->data['type_access'] = Auth::user()->groups()->where('id', $group)->first()->access_id;
-            $this->data['breadcrumb'] = Group::getBreadcrumb($group);
+            $data['type_access'] = Auth::user()->groups()->where('id', $group)->first()->access_id;
+            $data['breadcrumb'] = Group::getBreadcrumb($group);
         }
 
-        return view($this->theme() . '.groups.create', $this->data);
+        $data = array_merge($this->data, $data);
+        return view($this->theme() . '.groups.create', $data);
     }
 
     /**
@@ -50,7 +43,6 @@ class GroupsController extends MainController
     public function store(GroupRequest $request)
     {
         $data = $request->validated();
-
         $data['parent_id'] = $request->group;
         $data['user_id'] = Auth::user()->id;
 
@@ -60,18 +52,8 @@ class GroupsController extends MainController
             return redirect()->route('groups.create');
         }
 
-        return redirect()->route('group', ['group' => $request->group])->with('status', __('main.group_created'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('group', ['group' => $request->group])
+            ->with('status', __('groups.group_created'));
     }
 
     /**
@@ -80,19 +62,18 @@ class GroupsController extends MainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($group)
+    public function edit(Group $group)
     {
-        $this->data['group'] = $group;
-        $this->data['types'] = TypeAccess::all();
+        $this->authorize('group-edit', $group);
 
-        if ($group === 0) {
-            $this->data['type_access'] = Auth::user()->type_access_id;
-        } else {
-            $this->data['type_access'] = Auth::user()->groups()->where('id', $group)->first()->access_id;
-            $this->data['breadcrumb'] = Group::getBreadcrumb($group);
-        }
+        $data = [
+            'group' => $group,
+            'types' => TypeAccess::all(),
+            'breadcrumb' => Group::getBreadcrumb($group->id),
+        ];
 
-        return view($this->theme() . '.groups.edit', $this->data);
+        $data = array_merge($this->data, $data);
+        return view($this->theme() . '.groups.edit', $data);
     }
 
     /**
@@ -102,9 +83,19 @@ class GroupsController extends MainController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(GroupRequest $request, Group $group)
     {
-        //
+        //dd($request);
+        $this->authorize('group-edit', $group);
+
+        $result = $group->fill($request->validated())->save();
+
+        if (!$result) {
+            return redirect()->route('groups.edit', ['group' => $group]);
+        }
+
+        return redirect()->route('group', ['group' => $request->group])
+            ->with('status', __('groups.group_edited'));
     }
 
     /**
@@ -115,6 +106,8 @@ class GroupsController extends MainController
      */
     public function destroy(Group $group)
     {
+        $this->authorize('group-edit', $group);
+
         try {
             $group->delete();
         } catch (\Exception $e) {
@@ -123,4 +116,5 @@ class GroupsController extends MainController
 
         return redirect()->route('group', ['group_id' => $group->parent_id]);
     }
+
 }

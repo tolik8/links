@@ -18,7 +18,7 @@
                     </li>
 
                     <form id="delete-form" action="{{ route('groups.destroy', ['group' => $item->id]) }}" method="POST" style="display: none;">
-                        @csrf @method('delete')
+                        @csrf @method('DELETE')
                     </form>
                 @else
                     <li class="breadcrumb-item"><a href="{{ route('group', ['group' => $item->id]) }}">{{ $item->name }}</a></li>

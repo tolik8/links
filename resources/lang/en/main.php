@@ -12,6 +12,5 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'settings_saved' => 'Settings saved',
-    'group_created' => 'Group created',
-    
+
 ];
