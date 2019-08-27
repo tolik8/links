@@ -24,10 +24,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/friends', 'FriendsController@index')->name('friends');
     Route::get('/subscriptions', 'SubscriptionsController@index')->name('subscriptions');
 
+    Route::resource('/groups', 'GroupsController')->except(['index', 'show', 'create']);
     Route::get('/groups/create/{group}', 'GroupsController@create')->name('groups.create');
-    Route::post('/groups', 'GroupsController@store')->name('groups.store');
-    Route::get('/groups/{group}/edit', 'GroupsController@edit')->name('groups.edit');
-    Route::put('/groups/{group}', 'GroupsController@update')->name('groups.update');
-    Route::delete('/groups/{group}', 'GroupsController@destroy')->name('groups.destroy');
+
+    Route::resource('/links', 'LinksController')->except(['index', 'show', 'create']);
+    Route::get('/links/create/{group}', 'LinksController@create')->name('links.create');
 
 });

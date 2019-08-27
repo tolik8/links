@@ -21,6 +21,8 @@ class CreateLinksTable extends Migration
             $table->string('description')->comment('Description');
             $table->string('link')->comment('Link');
             $table->string('image')->comment('Image');
+            $table->bigInteger('group_id')->unsigned()->comment('Group ID');
+            $table->foreign('group_id')->references('id')->on('groups');
             $table->bigInteger('user_id')->unsigned()->comment('User ID');
             $table->foreign('user_id')->references('id')->on('users');
             $table->bigInteger('access_id')->unsigned()->comment('Access ID');
@@ -38,6 +40,12 @@ class CreateLinksTable extends Migration
      */
     public function down()
     {
+        Schema::table('links', function (Blueprint $table) {
+            $table->dropForeign('links_access_id_foreign');
+            $table->dropForeign('links_user_id_foreign');
+            $table->dropForeign('links_group_id_foreign');
+        });
+
         Schema::dropIfExists('links');
     }
 }
