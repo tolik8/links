@@ -2,60 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
+use App\TypeAccess;
+use Auth;
 use Illuminate\Http\Request;
 
-class LinksController extends Controller
+class LinksController extends MainController
 {
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create($group)
+    public function create($group = 0)
     {
-        //
+        $group = (int)$group;
+        $data = [
+            'group' => $group,
+            'types' => TypeAccess::all(),
+        ];
+
+        if ($group === 0) {
+            $data['type_access'] = Auth::user()->type_access_id;
+        } else {
+            $data['type_access'] = Auth::user()->groups()->where('id', $group)->first()->access_id;
+            $data['breadcrumb'] = Group::getBreadcrumb($group);
+        }
+
+        $data = array_merge($this->data, $data);
+        return view($this->theme() . '.links.create', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

@@ -10,11 +10,6 @@ use App\TypeAccess;
 
 class GroupsController extends MainController
 {
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create($group = 0)
     {
         $group = (int)$group;
@@ -34,12 +29,6 @@ class GroupsController extends MainController
         return view($this->theme() . '.groups.create', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(GroupRequest $request)
     {
         $data = $request->validated();
@@ -56,12 +45,6 @@ class GroupsController extends MainController
             ->with('status', __('groups.group_created'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Group $group)
     {
         $this->authorize('group-edit', $group);
@@ -76,13 +59,6 @@ class GroupsController extends MainController
         return view($this->theme() . '.groups.edit', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(GroupRequest $request, Group $group)
     {
         //dd($request);
@@ -98,12 +74,6 @@ class GroupsController extends MainController
             ->with('status', __('groups.group_edited'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Group $group)
     {
         $this->authorize('group-edit', $group);
