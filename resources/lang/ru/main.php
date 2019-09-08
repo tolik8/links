@@ -13,6 +13,7 @@ return [
     'delete' => 'Удалить',
     'settings_saved' => 'Настройки сохранены',
     'link' => 'Ссылка',
-    'create_new_link' => 'Создать новую ссылку',
+    'description' => 'Описание',
+    'tags_placeholder' => 'Теги (разделитель запятая)',
 
 ];

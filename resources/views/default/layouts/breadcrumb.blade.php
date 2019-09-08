@@ -16,6 +16,7 @@
                             <li class="cursor-pointer"><a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('delete-form').submit();">{{ __('main.delete') }}</a></li>
                         </ul>
                     </li>
+                    <a href="{{ route('groups.create', ['group' => $group]) }}" class="px-1 ml-3 edit-elements {{ $d_none }}"><i class="fas fa-plus-square"></i></a>
 
                     <form id="delete-form" action="{{ route('groups.destroy', ['group' => $item->id]) }}" method="POST" style="display: none;">
                         @csrf @method('DELETE')

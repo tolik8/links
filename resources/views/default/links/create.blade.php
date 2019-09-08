@@ -1,22 +1,28 @@
 @extends($theme.'.layouts.app')
 
-@section('title', 'Links - ' . __('main.create_new_link'))
+@section('title', 'Links - ' . __('links.create_new_link'))
 
 @section('content')
 <div class="container">
 
     @include($theme.'.layouts.breadcrumb')
-    <h3>@lang('main.create_new_link')</h3>
+    <h3>@lang('links.create_new_link')</h3>
     @include($theme.'.layouts.errors')
 
-    <form action="{{ route('groups.store') }}" method="POST">
+    <form action="{{ route('links.store') }}" method="POST">
         @csrf
-        {{--<input type="hidden" name="group" value="{{ $group }}">--}}
+        <input type="hidden" name="group" value="{{ $group }}">
+        <div class="form-group">
+            <input type="text" name="link" class="form-control" placeholder="@lang('main.link')" value="{{ old('link') }}" autocomplete="off">
+        </div>
         <div class="form-group">
             <input type="text" name="name" class="form-control" placeholder="@lang('main.name')" value="{{ old('name') }}" autocomplete="off">
         </div>
         <div class="form-group">
-            <input type="text" name="link" class="form-control" placeholder="@lang('main.link')" value="{{ old('link') }}" autocomplete="off">
+            <input type="text" name="tags" class="form-control" placeholder="@lang('main.tags_placeholder')" value="{{ old('tags') }}" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <textarea name="description" class="form-control" rows="3" maxlength="500" id="description-id" placeholder="@lang('main.description')">{{ old('description') }}</textarea>
         </div>
         <div class="form-group">
             <label for="TypeOfAccess">@lang('groups.type_access')</label>

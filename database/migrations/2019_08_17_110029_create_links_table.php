@@ -18,9 +18,9 @@ class CreateLinksTable extends Migration
         Schema::create($table, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->comment('Name');
-            $table->string('description')->comment('Description');
+            $table->text('description')->nullable()->comment('Description');
             $table->string('link')->comment('Link');
-            $table->string('image')->comment('Image');
+            $table->string('image')->nullable()->comment('Image');
             $table->bigInteger('group_id')->unsigned()->comment('Group ID');
             $table->foreign('group_id')->references('id')->on('groups');
             $table->bigInteger('user_id')->unsigned()->comment('User ID');

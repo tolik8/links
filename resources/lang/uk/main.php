@@ -13,6 +13,7 @@ return [
     'delete' => 'Видалити',
     'settings_saved' => 'Налаштування зебережено',
     'link' => 'Лінк',
-    'create_new_link' => 'Створити новий лінк',
+    'description' => 'Опис',
+    'tags_placeholder' => 'Теги (роздільник кома)',
 
 ];

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Http\Requests\LinkRequest;
+use App\Link;
 use App\TypeAccess;
 use Auth;
 use Illuminate\Http\Request;
@@ -28,9 +30,20 @@ class LinksController extends MainController
         return view($this->theme() . '.links.create', $data);
     }
 
-    public function store(Request $request)
+    public function store(LinkRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['group_id'] = $request->group;
+        $data['user_id'] = Auth::user()->id;
+
+        $result = Link::create($data);
+
+        if (!is_object($result)) {
+            return redirect()->route('links.create');
+        }
+
+        return redirect()->route('group', ['group' => $request->group])
+            ->with('status', __('links.link_created'));
     }
 
     public function edit($id)

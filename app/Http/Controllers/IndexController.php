@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Link;
+use Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +29,9 @@ class IndexController extends MainController
         if ($group !== 0) {
             $data['breadcrumb'] = Group::getBreadcrumb($group);
         }
+
+        $data['links'] = Link::where('user_id', Auth::user()->id)
+            ->where('group_id', $group)->get();
 
         $data['groups'] = Auth::user()->groups()->where('parent_id', $group)->get();
 

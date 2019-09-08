@@ -30,4 +30,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/links', 'LinksController')->except(['index', 'show', 'create']);
     Route::get('/links/create/{group}', 'LinksController@create')->name('links.create');
 
+    Route::get('/cookie/show_edit_elements/{value}', 'SetCookieController@show_edit_elements');
 });

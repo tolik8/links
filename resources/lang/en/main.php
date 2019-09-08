@@ -13,6 +13,7 @@ return [
     'delete' => 'Delete',
     'settings_saved' => 'Settings saved',
     'link' => 'Link',
-    'create_new_link' => 'Create new link',
+    'description' => 'Description',
+    'tags_placeholder' => 'Tags (comma separator)',
 
 ];
