@@ -25,10 +25,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/subscriptions', 'SubscriptionsController@index')->name('subscriptions');
 
     Route::resource('/groups', 'GroupsController')->except(['index', 'show', 'create']);
-    Route::get('/groups/create/{group}', 'GroupsController@create')->name('groups.create');
+    Route::get('/groups/create/{group?}', 'GroupsController@create')->name('groups.create');
 
     Route::resource('/links', 'LinksController')->except(['index', 'show', 'create']);
-    Route::get('/links/create/{group}', 'LinksController@create')->name('links.create');
+    Route::get('/links/create/{group?}', 'LinksController@create')->name('links.create');
 
     Route::get('/cookie/show_edit_elements/{value}', 'SetCookieController@show_edit_elements');
 });

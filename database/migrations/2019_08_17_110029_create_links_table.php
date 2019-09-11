@@ -21,7 +21,7 @@ class CreateLinksTable extends Migration
             $table->text('description')->nullable()->comment('Description');
             $table->string('link')->comment('Link');
             $table->string('image')->nullable()->comment('Image');
-            $table->bigInteger('group_id')->unsigned()->comment('Group ID');
+            $table->bigInteger('group_id')->unsigned()->nullable()->comment('Group ID');
             $table->foreign('group_id')->references('id')->on('groups');
             $table->bigInteger('user_id')->unsigned()->comment('User ID');
             $table->foreign('user_id')->references('id')->on('users');

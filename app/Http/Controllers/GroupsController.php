@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CreateItemsService;
 use Illuminate\Http\Request;
 use App\Group;
 use App\Http\Requests\GroupRequest;
@@ -10,22 +11,10 @@ use App\TypeAccess;
 
 class GroupsController extends MainController
 {
-    public function create($group = 0)
+    public function create($group = null)
     {
-        $group = (int)$group;
-        $data = [
-            'group' => $group,
-            'types' => TypeAccess::all(),
-        ];
+        $data = (new CreateItemsService())->create($this->data, $group);
 
-        if ($group === 0) {
-            $data['type_access'] = Auth::user()->type_access_id;
-        } else {
-            $data['type_access'] = Auth::user()->groups()->where('id', $group)->first()->access_id;
-            $data['breadcrumb'] = Group::getBreadcrumb($group);
-        }
-
-        $data = array_merge($this->data, $data);
         return view($this->theme() . '.groups.create', $data);
     }
 
