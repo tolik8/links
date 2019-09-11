@@ -39,4 +39,21 @@ class LinkRequest extends FormRequest
         ];
     }
 
+    protected function getValidatorInstance()
+    {
+        $this->formatLink();
+        return parent::getValidatorInstance();
+    }
+
+    protected function formatLink()
+    {
+        $link = $this->request->get('link');
+
+        if (strpos($link, 'http') !== 0) {
+            $this->merge([
+                'link' => 'http://' . $link
+            ]);
+        }
+    }
+
 }

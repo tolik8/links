@@ -48,7 +48,10 @@ class LinksController extends MainController
 
     public function edit($id)
     {
-        //
+        $data = [];
+
+        $data = array_merge($this->data, $data);
+        return view($this->theme() . '.links.edit', $data);
     }
 
     public function update(Request $request, $id)

@@ -10,7 +10,7 @@
 
     <div class="groups mb-3">
         @foreach ($groups as $item)
-            <a href="{{ route('group', ['group' => $item->id]) }}" class="btn btn-success mr-1">{!! $item->icon !!} {{ $item->name }}</a>
+            <a href="{{ route('group', ['group' => $item->id]) }}" class="btn btn-outline-secondary mr-1">{!! $item->icon !!} {{ $item->name }}</a>
         @endforeach
     </div>
 
