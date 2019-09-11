@@ -26,7 +26,7 @@ class GroupRequest extends FormRequest
         return [
             'name'      => 'required|max:100',
             'access_id' => 'required|numeric',
-            'group'     => 'required|numeric',
+            //'group'     => 'required|numeric',
         ];
     }
 

@@ -1,15 +1,15 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Group;
 use App\TypeAccess;
+use Auth;
 
 class CreateItemsService
 {
-    public function create (array $baseData, $group) {
+    public function create(array $baseData, $group)
+    {
 
         $data = [
             'group' => $group,
@@ -23,7 +23,7 @@ class CreateItemsService
             $data['breadcrumb'] = Group::getBreadcrumb($group);
         }
 
-        return  array_merge($baseData, $data);
+        return array_merge($baseData, $data);
     }
 
 }

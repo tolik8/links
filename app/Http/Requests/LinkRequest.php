@@ -28,7 +28,7 @@ class LinkRequest extends FormRequest
             'name'        => 'required|max:191',
             'description' => 'max:500',
             'access_id'   => 'required|numeric',
-            'group'       => 'required|numeric',
+            //'group'       => 'required|numeric',
         ];
     }
 
