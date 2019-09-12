@@ -10,10 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class IndexController extends MainController
 {
-    public function index($group = 0)
+    public function index($group = null)
     {
-        $group = (int)$group;
-
         if (!Auth::user()) {
             return $this->indexNotAuth();
         }
@@ -21,12 +19,12 @@ class IndexController extends MainController
         return $this->indexAuth($group);
     }
 
-    public function indexAuth($group = 0)
+    public function indexAuth($group = null)
     {
         $data = $this->data;
         $data['group'] = $group;
 
-        if ($group !== 0) {
+        if ($group !== null) {
             $data['breadcrumb'] = Group::getBreadcrumb($group);
         }
 
@@ -52,6 +50,11 @@ class IndexController extends MainController
     public function indexNotAuth()
     {
         return view($this->theme() . '.index_not_auth', $this->data);
+    }
+
+    public function redirectToIndex()
+    {
+        return redirect()->route('index');
     }
 
 }

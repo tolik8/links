@@ -39,9 +39,7 @@ class Group extends Model
 
     public static function getBreadcrumb($id)
     {
-        $id = (int)$id;
-
-        if ($id === 0) {
+        if ($id === null) {
             return collect();
         }
 
@@ -49,7 +47,7 @@ class Group extends Model
         $breadcrumb = collect();
         $i = 0;
 
-        while ($id !== 0 && $i < 10) {
+        while ($id !== null && $i < 10) {
             $element = self::where('id', $id)->where('user_id', $user_id)->get();
 
             if ($element->isNotEmpty()) {

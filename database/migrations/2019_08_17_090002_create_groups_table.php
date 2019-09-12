@@ -18,7 +18,7 @@ class CreateGroupsTable extends Migration
         Schema::create($table, function (Blueprint $table) {
             $table->bigIncrements('id')->comment('ID');
             $table->string('name')->comment('Name');
-            $table->bigInteger('parent_id')->unsigned()->comment('Parent ID');
+            $table->bigInteger('parent_id')->unsigned()->nullable()->comment('Parent ID');
             $table->bigInteger('user_id')->unsigned()->comment('User ID');
             $table->foreign('user_id')->references('id')->on('users');
             $table->bigInteger('access_id')->unsigned()->comment('Access ID');

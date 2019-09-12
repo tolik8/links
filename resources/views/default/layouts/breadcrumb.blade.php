@@ -26,6 +26,6 @@
             @endforeach
         @endif
 
-        <a href="{{ route('groups.create', ['group' => $group]) }}" class="px-1 ml-3 edit-elements {{ $d_none }}"><i class="fas fa-plus-square"></i></a>
+        <a href="{{ route('groups.create', $group ? compact('group') : []) }}" class="px-1 ml-3 edit-elements {{ $d_none }}"><i class="fas fa-plus-square"></i></a>
     </ol>
 </nav>
