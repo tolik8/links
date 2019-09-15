@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $access_id Access ID
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property mixed group_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Link newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Link newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Link query()
@@ -33,4 +34,10 @@ use Illuminate\Database\Eloquent\Model;
 class Link extends Model
 {
     protected $fillable = ['name', 'link', 'description', 'group_id', 'user_id', 'access_id'];
+
+    public function group()
+    {
+        return $this->belongsTo('App\Group');
+    }
+
 }

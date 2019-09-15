@@ -11,7 +11,7 @@
 
     <form action="{{ route('links.store') }}" method="POST">
         @csrf
-        <input type="hidden" name="group" value="{{ $group }}">
+        <input type="hidden" name="group" value="{{ $group->id }}">
         <div class="form-group">
             <input type="text" name="link" class="form-control" placeholder="@lang('main.link')" value="{{ old('link') }}" autocomplete="off">
         </div>

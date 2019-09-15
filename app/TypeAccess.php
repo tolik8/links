@@ -25,9 +25,9 @@ class TypeAccess extends Model
 {
     protected $table = 'type_access';
 
-    public function user()
+    /*public function user()
     {
         return $this->belongsTo('App\User');
-    }
+    }*/
 
 }

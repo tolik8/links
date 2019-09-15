@@ -25,7 +25,7 @@ class SettingsController extends MainController
             $user->type_access_id = $request->get('type_access_id');
 
             if ($user->save()) {
-                return redirect()->route('settings')->with('status', __('main.settings_saved'));
+                return redirect()->route('settings')->with('alert-success', __('main.settings_saved'));
             }
         }
 

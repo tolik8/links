@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Group;
 use App\Link;
-use Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class IndexController extends MainController
 {
-    public function index($group = null)
+    public function index(Group $group)
     {
         if (!Auth::user()) {
             return $this->indexNotAuth();
@@ -19,19 +18,19 @@ class IndexController extends MainController
         return $this->indexAuth($group);
     }
 
-    public function indexAuth($group = null)
+    public function indexAuth(Group $group)
     {
         $data = $this->data;
         $data['group'] = $group;
 
         if ($group !== null) {
-            $data['breadcrumb'] = Group::getBreadcrumb($group);
+            $data['breadcrumb'] = Group::getBreadcrumb($group->id);
         }
 
         $data['links'] = Link::where('user_id', Auth::user()->id)
-            ->where('group_id', $group)->get();
+            ->where('group_id', $group->id)->get();
 
-        $data['groups'] = Auth::user()->groups()->where('parent_id', $group)->get();
+        $data['groups'] = Auth::user()->groups()->where('parent_id', $group->id)->get();
 
         foreach ($data['groups'] as $item) {
             switch ($item->access_id) {

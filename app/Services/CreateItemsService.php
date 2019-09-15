@@ -8,18 +8,18 @@ use Auth;
 
 class CreateItemsService
 {
-    public function create(array $baseData, $group)
+    public function create(array $baseData, Group $group)
     {
         $data = [
             'group' => $group,
             'types' => TypeAccess::all(),
         ];
 
-        if ($group === null) {
-            $data['type_access'] = Auth::user()->type_access_id;
+        if ($group->id) {
+            $data['type_access'] = Auth::user()->groups()->where('id', $group->id)->first()->access_id;
+            $data['breadcrumb'] = Group::getBreadcrumb($group->id);
         } else {
-            $data['type_access'] = Auth::user()->groups()->where('id', $group)->first()->access_id;
-            $data['breadcrumb'] = Group::getBreadcrumb($group);
+            $data['type_access'] = Auth::user()->type_access_id;
         }
 
         return array_merge($baseData, $data);

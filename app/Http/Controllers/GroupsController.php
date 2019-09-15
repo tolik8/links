@@ -11,7 +11,7 @@ use App\TypeAccess;
 
 class GroupsController extends MainController
 {
-    public function create($group = null)
+    public function create(Group $group)
     {
         $data = (new CreateItemsService())->create($this->data, $group);
 
@@ -21,7 +21,7 @@ class GroupsController extends MainController
     public function store(GroupRequest $request)
     {
         $data = $request->validated();
-        $data['parent_id'] = $request->group;
+        $data['parent_id'] = $request->group ?? null;
         $data['user_id'] = Auth::user()->id;
 
         $result = Group::create($data);
@@ -31,13 +31,12 @@ class GroupsController extends MainController
         }
 
         return redirect()->route('group', ['group' => $request->group])
-            ->with('status', __('groups.group_created'));
+            ->with('alert-success', __('groups.group_created'));
     }
 
     public function edit(Group $group)
     {
         $this->authorize('group-edit', $group);
-        //dump($errors);
 
         $data = [
             'group' => $group,
@@ -51,7 +50,6 @@ class GroupsController extends MainController
 
     public function update(GroupRequest $request, Group $group)
     {
-        //dd($request);
         $this->authorize('group-edit', $group);
 
         $result = $group->fill($request->validated())->save();
@@ -61,21 +59,26 @@ class GroupsController extends MainController
         }
 
         return redirect()->route('group', ['group' => $request->group])
-            ->with('status', __('groups.group_edited'));
+            ->with('alert-success', __('groups.group_edited'));
     }
 
     public function destroy(Group $group)
     {
         $this->authorize('group-edit', $group);
 
-        try {
-            $group->delete();
-        } catch (\Exception $e) {
+        if (!$group->allowDestroy()) {
             return redirect()->route('groups.edit', ['group' => $group->id])
                 ->with('alert-danger', __('groups.group_delete_error'));
         }
 
-        return redirect()->route('group', ['group_id' => $group->parent_id]);
+        try {
+            $group->delete();
+        } catch (\Exception $e) {
+
+        }
+
+        return redirect()->route('group', ['group_id' => $group->parent_id])
+            ->with('alert-success', __('groups.group_deleted'));
     }
 
 }

@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class LinksController extends MainController
 {
-    public function create($group = null)
+    public function create(Group $group)
     {
         $data = (new CreateItemsService())->create($this->data, $group);
 
@@ -22,7 +22,7 @@ class LinksController extends MainController
     public function store(LinkRequest $request)
     {
         $data = $request->validated();
-        $data['group_id'] = $request->group ?: null;
+        $data['group_id'] = $request->group ?? null;
         $data['user_id'] = Auth::user()->id;
 
         $result = Link::create($data);
@@ -32,13 +32,22 @@ class LinksController extends MainController
         }
 
         return redirect()->route('group', ['group' => $request->group])
-            ->with('status', __('links.link_created'));
+            ->with('alert-success', __('links.link_created'));
     }
 
-    public function edit($id)
+    public function edit(Link $link)
     {
-        $data = [];
+        //dd($link->group);
+        $data = [
+            'link' => $link,
+            'group' => $link->group,
+            'user_id' => Auth::user()->id,
+            'types' => TypeAccess::all(),
+            'type_access' => $link->access_id,
+            'breadcrumb' => Group::getBreadcrumb($link->group_id),
+        ];
 
+        //dd($data);
         $data = array_merge($this->data, $data);
         return view($this->theme() . '.links.edit', $data);
     }

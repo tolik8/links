@@ -37,6 +37,11 @@ class Group extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function links()
+    {
+        return $this->hasMany('App\Link');
+    }
+
     public static function getBreadcrumb($id)
     {
         if ($id === null) {
@@ -62,14 +67,19 @@ class Group extends Model
         return $breadcrumb->reverse();
     }
 
-
     public function children() {
-        return $this->hasMany('Group', 'parent_id');
+        return $this->hasMany('App\Group', 'parent_id');
     }
 
     public function parent() {
-        return $this->belongsTo('Group', 'parent_id');
+        return $this->belongsTo('App\Group', 'parent_id');
     }
 
+    public function allowDestroy() {
+        $children = $this->children()->get()->count();
+        $links = $this->links()->get()->count();
+
+        return $children === 0 && $links === 0;
+    }
     
 }

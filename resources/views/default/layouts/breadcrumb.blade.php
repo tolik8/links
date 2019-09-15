@@ -23,7 +23,7 @@
                     @endif
 
                     @if(Route::currentRouteName() !== 'groups.edit')
-                        <a href="{{ route('groups.edit', ['group' => $group]) }}" class="px-1 ml-1 edit-elements {{ $d_none }}"><i class="fas fa-edit"></i></a>
+                        <a href="{{ route('groups.edit', ['group' => $group->id]) }}" class="px-1 ml-1 edit-elements {{ $d_none }}"><i class="fas fa-edit"></i></a>
                     @endif
 
                     {{--<form id="delete-form" action="{{ route('groups.destroy', ['group' => $item->id]) }}" method="POST" style="display: none;">
@@ -36,7 +36,7 @@
         @endif
 
         @if(Route::currentRouteName() !== 'groups.create')
-            <a href="{{ route('groups.create', ['group' => $group]) }}" class="px-1 ml-3 edit-elements {{ $d_none }}"><i class="fas fa-plus-square"></i></a>
+            <a href="{{ route('groups.create', ['group' => $group->id ?? null]) }}" class="px-1 ml-3 edit-elements {{ $d_none }}"><i class="fas fa-plus-square"></i></a>
         @endif
     </ol>
 </nav>

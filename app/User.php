@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * App\User
@@ -76,20 +75,5 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\TypeAccess');
     }
-
-    /*public static function getTypeAccess()
-    {
-        $type_access_id = Auth::user()->type_access_id;
-
-        if (!$type_access_id) {
-            return Config('settings.default_type_access');
-        }
-
-        if ($type_access_id === 0) {
-            return Config('settings.default_type_access');
-        }
-
-        return $type_access_id;
-    }*/
 
 }
