@@ -20,14 +20,8 @@
             <a href="{{ route('links.edit', ['link' => $item->id]) }}" class="edit-elements mr-2 {{ $d_none }}"><i class="far fa-edit"></i></a>
         @endforeach
 
-        @if($group)
-            <a href="{{ route('links.create', ['group' => $group]) }}" class="btn btn-primary edit-elements {{ $d_none }}"><i class="fas fa-plus-square mr-2"></i> {{ __('links.add_link') }}</a>
-        @else
-            <a href="{{ route('links.create') }}" class="btn btn-primary edit-elements {{ $d_none }}"><i class="fas fa-plus-square mr-2"></i> {{ __('links.add_link') }}</a>
-       @endif
+        <a href="{{ route('links.create', $group ? compact('group') : []) }}" class="btn btn-primary edit-elements {{ $d_none }}"><i class="fas fa-plus-square mr-2"></i> {{ __('links.add_link') }}</a>
     </div>
-
-
 
 </div>
 @endsection

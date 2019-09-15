@@ -10,7 +10,6 @@ class CreateItemsService
 {
     public function create(array $baseData, $group)
     {
-
         $data = [
             'group' => $group,
             'types' => TypeAccess::all(),

@@ -18,6 +18,7 @@ Route::get('/setlocale/{lang}', 'LocaleController@setLocale')->name('setlocale')
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/group/{group}', 'IndexController@index')->name('group');
+    Route::get('/group', 'IndexController@redirectToIndex');
 
     Route::get('/settings', 'SettingsController@index')->name('settings');
     Route::post('/settings', 'SettingsController@save')->name('settings_save');
