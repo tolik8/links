@@ -7,7 +7,7 @@
 
     @include($theme.'.layouts.breadcrumb')
     <h3>@lang('groups.create_new_group')</h3>
-    @include($theme.'.layouts.errors')
+    @include($theme.'.layouts.alerts')
 
     <form action="{{ route('groups.store') }}" method="POST">
         @csrf

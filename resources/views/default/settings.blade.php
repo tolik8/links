@@ -7,8 +7,7 @@
 
     <h3>@lang('main.settings')</h3>
 
-    @include($theme.'.layouts.errors')
-    @include($theme.'.layouts.success')
+    @include($theme.'.layouts.alerts')
 
     <form action="{{ route('settings_save') }}" method="POST">
         @csrf

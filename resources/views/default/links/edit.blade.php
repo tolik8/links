@@ -7,7 +7,7 @@
 
     @include($theme.'.layouts.breadcrumb')
     <h3>@lang('links.create_new_link')</h3>
-    @include($theme.'.layouts.errors')
+    @include($theme.'.layouts.alerts')
 
     <form action="{{ route('links.store') }}" method="POST">
         @csrf

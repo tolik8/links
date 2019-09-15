@@ -6,7 +6,7 @@
 <div class="container">
 
     @include($theme.'.layouts.breadcrumb')
-    @include($theme.'.layouts.success')
+    @include($theme.'.layouts.alerts')
 
     <div class="groups mb-3">
         @foreach ($groups as $item)

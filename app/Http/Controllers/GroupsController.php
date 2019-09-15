@@ -37,6 +37,7 @@ class GroupsController extends MainController
     public function edit(Group $group)
     {
         $this->authorize('group-edit', $group);
+        //dump($errors);
 
         $data = [
             'group' => $group,
@@ -70,7 +71,8 @@ class GroupsController extends MainController
         try {
             $group->delete();
         } catch (\Exception $e) {
-
+            return redirect()->route('groups.edit', ['group' => $group->id])
+                ->with('alert-danger', __('groups.group_delete_error'));
         }
 
         return redirect()->route('group', ['group_id' => $group->parent_id]);

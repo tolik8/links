@@ -7,7 +7,7 @@
 
     @include($theme.'.layouts.breadcrumb')
     <h3>@lang('groups.edit_group')</h3>
-    @include($theme.'.layouts.errors')
+    @include($theme.'.layouts.alerts')
 
     <form action="{{ route('groups.update', $group->id) }}" method="POST">
         @csrf @method('PUT')
@@ -32,5 +32,9 @@
         <button type="submit" class="btn btn-primary">@lang('main.edit')</button>
     </form>
 
+    <form id="delete-form" action="{{ route('groups.destroy', ['group' => $group->id]) }}" method="POST" class="mt-5">
+        @csrf @method('DELETE')
+        <button type="submit" class="btn btn-danger">@lang('main.delete')</button>
+    </form>
 </div>
 @endsection
