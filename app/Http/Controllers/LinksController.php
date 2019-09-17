@@ -22,7 +22,7 @@ class LinksController extends MainController
     public function store(LinkRequest $request)
     {
         $data = $request->validated();
-        $data['group_id'] = $request->group ?? null;
+        $data['group_id'] = $request->group_id;
         $data['user_id'] = Auth::user()->id;
 
         $result = Link::create($data);
@@ -37,10 +37,9 @@ class LinksController extends MainController
 
     public function edit(Link $link)
     {
-        //dd($link->group);
         $data = [
             'link' => $link,
-            'group' => $link->group,
+            'group_id' => $link->group->id ?? null,
             'user_id' => Auth::user()->id,
             'types' => TypeAccess::all(),
             'type_access' => $link->access_id,

@@ -11,7 +11,7 @@
 
     <form action="{{ route('links.update', ['link' => $link->id]) }}" method="POST">
         @csrf @method('PUT')
-        <input type="hidden" name="group" value="{{ $group->id }}">
+        <input type="hidden" name="group" value="{{ $group_id }}">
         <div class="form-group">
             <input type="text" name="link" class="form-control" placeholder="@lang('main.link')" value="{{ old('link') ?? $link->link }}" autocomplete="off">
         </div>
@@ -30,7 +30,7 @@
                 @foreach ($types as $type)
                     @if (old('access_id') !== null && old('access_id') === $type->id)
                         <option value="{{ old('access_id') }}" selected>{{ __($type->name) }}</option>
-                    @elseif ($group->id === $type->id)
+                    @elseif ($group_id === $type->id)
                         <option value="{{ $type->id }}" selected>{{ __($type->name) }}</option>
                     @else
                         <option value="{{ $type->id }}">{{ __($type->name) }}</option>
