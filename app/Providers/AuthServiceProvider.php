@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Group;
+use App\Link;
 use App\Policies\GroupPolicy;
+use App\Policies\LinkPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -17,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
         Group::class => GroupPolicy::class,
+        Link::class => LinkPolicy::class,
     ];
 
     /**
@@ -32,5 +35,6 @@ class AuthServiceProvider extends ServiceProvider
             return $user->id == $group->user_id;
         });*/
         Gate::define('group-edit', 'App\Policies\GroupPolicy@edit');
+        Gate::define('link-edit', 'App\Policies\LinkPolicy@edit');
     }
 }

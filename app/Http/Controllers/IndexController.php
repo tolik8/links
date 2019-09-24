@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Group;
 use App\Link;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class IndexController extends MainController
