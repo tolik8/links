@@ -8,6 +8,7 @@ use App\Http\Requests\GroupRequest;
 //use Illuminate\Http\Request;
 use Auth;
 use App\TypeAccess;
+use App\Helpers\Str as StrHelper;
 
 class GroupsController extends MainController
 {
@@ -21,7 +22,7 @@ class GroupsController extends MainController
     public function store(GroupRequest $request)
     {
         $data = $request->validated();
-        $data['parent_id'] = $request->group ?? null;
+        $data['parent_id'] = StrHelper::emptyToNull($request->group);
         $data['user_id'] = Auth::user()->id;
 
         $result = Group::create($data);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Helpers\Str as StrHelper;
 use App\Http\Requests\LinkRequest;
 //use Illuminate\Http\Request;
 use App\Link;
@@ -22,7 +23,7 @@ class LinksController extends MainController
     public function store(LinkRequest $request)
     {
         $data = $request->validated();
-        $data['group_id'] = $request->group_id;
+        $data['group_id'] = StrHelper::emptyToNull($request->group_id);
         $data['user_id'] = Auth::user()->id;
 
         $result = Link::create($data);
@@ -48,7 +49,6 @@ class LinksController extends MainController
             'types' => TypeAccess::all(),
             'breadcrumb' => Group::getBreadcrumb($link->group_id),
         ];
-        dd(old('name'));
 
         $data = array_merge($this->data, $data);
         return view($this->theme() . '.links.edit', $data);
