@@ -31,7 +31,7 @@ class LinkRequest extends FormRequest
             'name'        => 'required|max:191',
             'description' => 'max:500',
             'access_id'   => 'required|numeric',
-            //'group'       => 'required|numeric',
+            'group'       => 'numeric',
         ];
     }
 
@@ -45,6 +45,7 @@ class LinkRequest extends FormRequest
     protected function getValidatorInstance()
     {
         $this->formatLink();
+        $this->formatDescription();
         return parent::getValidatorInstance();
     }
 
@@ -55,6 +56,17 @@ class LinkRequest extends FormRequest
         if (strpos($link, 'http') !== 0) {
             $this->merge([
                 'link' => 'http://' . $link
+            ]);
+        }
+    }
+
+    protected function formatDescription()
+    {
+        $description = $this->request->get('description');
+
+        if (trim($description) === '') {
+            $this->merge([
+                'description' => null
             ]);
         }
     }

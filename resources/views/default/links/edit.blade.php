@@ -19,7 +19,7 @@
             <input type="text" name="name" class="form-control" placeholder="@lang('main.name')" value="{{ old('name') ?? $link->name }}" autocomplete="off">
         </div>
         <div class="form-group">
-            <input type="text" name="tags" class="form-control" placeholder="@lang('main.tags_placeholder')" value="{{ old('tags') ?? $link->tags }}" autocomplete="off">
+            <input type="text" name="tags" class="form-control" placeholder="@lang('main.tags_placeholder')" value="{{ old('tags') ?? $tags }}" autocomplete="off">
         </div>
         <div class="form-group">
             <textarea name="description" class="form-control" rows="3" maxlength="500" id="description-id" placeholder="@lang('main.description')">{{ old('description') ?? $link->description }}</textarea>

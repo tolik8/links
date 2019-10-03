@@ -8,6 +8,7 @@ use App\Http\Requests\LinkRequest;
 //use Illuminate\Http\Request;
 use App\Link;
 use App\Services\CreateItemsService;
+use App\Tag;
 use App\TypeAccess;
 use Auth;
 
@@ -24,13 +25,16 @@ class LinksController extends MainController
     {
         $data = $request->validated();
         $data['group_id'] = StrHelper::emptyToNull($request->group_id);
+        $data['description'] = StrHelper::emptyToNull($request->description);
         $data['user_id'] = Auth::user()->id;
 
-        $result = Link::create($data);
+        $new_link = Link::create($data);
 
-        if (!is_object($result)) {
+        if (!is_object($new_link)) {
             return redirect()->route('links.create');
         }
+
+        Tag::insertTags($new_link->id, $request->tags);
 
         if ($request->group_id) {
             return redirect()->route('group', ['group' => $request->group])
@@ -48,6 +52,7 @@ class LinksController extends MainController
             'group' => Group::find($link->group_id),
             'types' => TypeAccess::all(),
             'breadcrumb' => Group::getBreadcrumb($link->group_id),
+            'tags' => $link->tags->implode('name', ', '),
         ];
 
         $data = array_merge($this->data, $data);
@@ -59,6 +64,8 @@ class LinksController extends MainController
         $this->authorize('link-edit', $link);
 
         $result = $link->fill($request->validated())->save();
+
+        Tag::updateTags($link, $request->tags);
 
         if (!$result) {
             return redirect()->route('links.edit', ['link' => $link]);
@@ -77,6 +84,8 @@ class LinksController extends MainController
     {
         $this->authorize('link-edit', $link);
 
+        $link->tags()->delete();
+
         try {
             $link->delete();
         } catch (\Exception $e) {
@@ -91,4 +100,5 @@ class LinksController extends MainController
         return redirect()->route('index')
             ->with('alert-success', __('links.link_deleted'));
     }
+
 }

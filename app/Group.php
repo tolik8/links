@@ -27,6 +27,9 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Group whereUserId($value)
  * @mixin \Eloquent
  * @property-read \App\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Group[] $children
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Link[] $links
+ * @property-read \App\Group|null $parent
  */
 class Group extends Model
 {
