@@ -26,7 +26,7 @@ class CreateGroupsTable extends Migration
             $table->timestamps();
         });
         
-        DB::statement("ALTER TABLE {$table} comment 'Groups of links'"); 
+        //DB::statement("ALTER TABLE {$table} comment 'Groups of links'"); 
     }
 
     /**
